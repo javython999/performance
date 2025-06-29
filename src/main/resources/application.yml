@@ -1,0 +1,15 @@
+spring:
+  mvc:
+    static-path-pattern: /ui/**
+  datasource:
+    url: jdbc:mysql://localhost:3306/shortenurl
+    username: study
+    password: study
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  data:
+    jdbc:
+      dialect: mysql

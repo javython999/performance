@@ -1,0 +1,18 @@
+config:
+  target: "http:141.164.34.91:8080"
+  phases:
+    - duration: 100
+      arrivalRate: 10
+      rampTo: 100
+  payload:
+    path: "urls.csv"
+    fields:
+      - "url"
+
+scenarios:
+  - name: "create shorten url"
+    flow:
+      - post:
+          url: "/shortenUrl"
+          json:
+            originalUrl: "{{ url }}:"
