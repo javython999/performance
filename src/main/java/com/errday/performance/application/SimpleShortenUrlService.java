@@ -1,9 +1,6 @@
 package com.errday.performance.application;
 
-import com.errday.performance.domain.LackOfShortenUrlKeyException;
-import com.errday.performance.domain.NotFoundShortenUrlException;
-import com.errday.performance.domain.ShortenUrl;
-import com.errday.performance.domain.ShortenUrlRepository;
+import com.errday.performance.domain.*;
 import com.errday.performance.presentation.ShortenUrlCreateRequestDto;
 import com.errday.performance.presentation.ShortenUrlCreateResponseDto;
 import com.errday.performance.presentation.ShortenUrlInformationDto;
@@ -28,7 +25,7 @@ public class SimpleShortenUrlService {
         String shortenUrlKey = getUniqueShortenUrlKey();
 
         ShortenUrl shortenUrl = new ShortenUrl(originalUrl, shortenUrlKey);
-        shortenUrlRepository.saveShortenUrl(shortenUrl);
+        shortenUrlRepository.asyncSaveShortenUrl(shortenUrl);
 
         ShortenUrlCreateResponseDto shortenUrlCreateResponseDto = new ShortenUrlCreateResponseDto(shortenUrl);
         return shortenUrlCreateResponseDto;
@@ -61,17 +58,6 @@ public class SimpleShortenUrlService {
     }
 
     private String getUniqueShortenUrlKey() {
-        final int MAX_RETRY_COUNT = 5;
-        int count = 0;
-
-        while(count++ < MAX_RETRY_COUNT) {
-            String shortenUrlKey = ShortenUrl.generateShortenUrlKey();
-            ShortenUrl shortenUrl = shortenUrlRepository.findShortenUrlByShortenUrlKey(shortenUrlKey);
-
-            if(null == shortenUrl)
-                return shortenUrlKey;
-        }
-
-        throw new LackOfShortenUrlKeyException();
+        return SnowflakeKeyGenerator.generateSnowflakeKey();
     }
 }
