@@ -1,8 +1,13 @@
 package com.errday.performance.domain;
 
+import org.springframework.scheduling.annotation.Scheduled;
+
 public interface ShortenUrlRepository {
     void saveShortenUrl(ShortenUrl shortenUrl);
-    ShortenUrl findShortenUrlByShortenUrlKey(String shortenUrlKey);
     void asyncSaveShortenUrl(ShortenUrl shortenUrl);
+    void increaseRedirectCount(ShortenUrl shortenUrl);
+    ShortenUrl findShortenUrlByShortenUrlKey(String shortenUrlKey);
 
+    @Scheduled(fixedRate = 10000)
+    void updateRedirectCounts();
 }

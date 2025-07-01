@@ -3,7 +3,6 @@ package com.errday.performance.domain;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class SnowflakeKeyGenerator {
-
     private static final String BASE56_CHARACTERS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";
     private static final int BASE56 = BASE56_CHARACTERS.length();
     private static final long EPOCH = 1609459200000L; // Custom epoch (e.g., January 1, 2021)

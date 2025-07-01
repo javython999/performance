@@ -1,6 +1,9 @@
 package com.errday.performance.application;
 
-import com.errday.performance.domain.*;
+import com.errday.performance.domain.NotFoundShortenUrlException;
+import com.errday.performance.domain.ShortenUrl;
+import com.errday.performance.domain.ShortenUrlRepository;
+import com.errday.performance.domain.SnowflakeKeyGenerator;
 import com.errday.performance.presentation.ShortenUrlCreateRequestDto;
 import com.errday.performance.presentation.ShortenUrlCreateResponseDto;
 import com.errday.performance.presentation.ShortenUrlInformationDto;
@@ -39,7 +42,8 @@ public class SimpleShortenUrlService {
             throw new NotFoundShortenUrlException();
 
         shortenUrl.increaseRedirectCount();
-        shortenUrlRepository.saveShortenUrl(shortenUrl);
+//        shortenUrlRepository.saveShortenUrl(shortenUrl);
+        shortenUrlRepository.increaseRedirectCount(shortenUrl);
 
         String originalUrl = shortenUrl.getOriginalUrl();
 
@@ -60,4 +64,5 @@ public class SimpleShortenUrlService {
     private String getUniqueShortenUrlKey() {
         return SnowflakeKeyGenerator.generateSnowflakeKey();
     }
+
 }
